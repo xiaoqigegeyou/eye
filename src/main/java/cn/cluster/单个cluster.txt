@@ -1,0 +1,27 @@
+{
+    "clusterMetrics": {
+        "appsSubmitted": 145700,
+        "appsCompleted": 145535,
+        "appsPending": 0,
+        "appsRunning": 97,
+        "appsFailed": 0,
+        "appsKilled": 68,
+        "reservedMB": 405504,
+        "availableMB": 7168,
+        "allocatedMB": 2755584,
+        "reservedVirtualCores": 48,
+        "availableVirtualCores": 1664,
+        "allocatedVirtualCores": 808,
+        "containersAllocated": 150,
+        "containersReserved": 6,
+        "containersPending": 45,
+        "totalMB": 2762752,
+        "totalVirtualCores": 2472,
+        "totalNodes": 30,
+        "lostNodes": 2,
+        "unhealthyNodes": 0,
+        "decommissionedNodes": 0,
+        "rebootedNodes": 0,
+        "activeNodes": 28
+    }
+}
