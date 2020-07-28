@@ -41,7 +41,7 @@
   
   
   <insert id="insertToToday" parameterType="job" >
-    insert into job_info_today (jobName, jobID, 
+    insert into application_info (jobName, jobID, 
       state, priority, progress, 
       productID, sateliteName, jobUser, 
       finalStatus, startedTime, finishedTime, 
@@ -114,7 +114,7 @@
   </insert> -->
 
   <insert id="insertToRuning" parameterType="job" >
-    insert into application_info_running (job_id,
+    insert into application_info_run (job_id,
       state, 
       product_id, satellite_name, job_user, 
       final_status, started_time, finished_time, 
@@ -130,7 +130,7 @@
       )
   </insert> 
   <insert id="insertListToRuning" parameterType="job">
-  	insert into application_info_running (job_id,
+  	insert into application_info_run (job_id,
       state, 
       product_id, satellite_name, job_user, 
       final_status, started_time, finished_time, 

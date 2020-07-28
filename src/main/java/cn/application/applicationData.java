@@ -39,7 +39,7 @@ public class applicationData {
 			if (state.equals("ACCEPTED")) {// 正在队列内的任务，还没有运行
 				continue;
 			} else if (state.equals("RUNNING")) {// 正在运行的任务
-				System.out.println("run");
+				//System.out.println("run");
 				if (jobAllName.indexOf("Un_Tar") != -1) {// 正在解压的任务
 					//ZY302_Un_Tar_+Receive_Data+4181+2020-07-01+ZY302_TMS_E114.4_N35.8_20200701_L1A0000696162.tar.gz
 					String[] nameArray = jobAllName.split("[+]");

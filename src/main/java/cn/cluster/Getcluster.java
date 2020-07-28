@@ -44,11 +44,12 @@ public class Getcluster {
 	
 	
 	//从http中获取
-//	public JsonArray getClusterDataSource() {
-//		
-//		JsonObject object = getHtmlSource.getJson(CONST.HTTP + CONST.MASTER_DOMAIN + CONST.APPLICATION_URL_END);//使用HTTP接口获得原始数据
-//		object = (JsonObject) object.get("apps");
-//		JsonArray array = object.get("app").getAsJsonArray(); // 获得原始数据的JSON数组
-//		return array;
-//	}
+	public JsonObject getClusterDataSource() {
+		
+		//JsonObject object = getHtmlSource.getJson(CONST.HTTP + CONST.MASTER_DOMAIN + CONST.APPLICATION_URL_END);//使用HTTP接口获得原始数据
+		JsonObject object = getHtmlSource.getJson("http://kj-gpu-master1.bigdata.com:8088/ws/v1/cluster/metrics");
+		object = (JsonObject) object.get("clusterMetrics");
+		
+		return object;
+	}
 }

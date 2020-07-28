@@ -11,7 +11,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-
+import cn.until.CONST;
 import cn.until.http.JsonHttp;
 
 
@@ -44,11 +44,12 @@ public class Getappliction {
 	
 	
 	//从http中获取
-//	public JsonArray getApplicationDataSource() {
-//		
-//		JsonObject object = getHtmlSource.getJson(CONST.HTTP + CONST.MASTER_DOMAIN + CONST.APPLICATION_URL_END);//使用HTTP接口获得原始数据
-//		object = (JsonObject) object.get("apps");
-//		JsonArray array = object.get("app").getAsJsonArray(); // 获得原始数据的JSON数组
-//		return array;
-//	}
+	public JsonArray getApplicationDataSource() {
+		
+		JsonObject object = getHtmlSource.getJson("http://kj-gpu-master1.bigdata.com:8088/ws/v1/cluster/apps");
+		//JsonObject object = getHtmlSource.getJson(CONST.HTTP + CONST.MASTER_DOMAIN + CONST.APPLICATION_URL_END);//使用HTTP接口获得原始数据
+		object = (JsonObject) object.get("apps");
+		JsonArray array = object.get("app").getAsJsonArray(); // 获得原始数据的JSON数组
+		return array;
+	}
 }
