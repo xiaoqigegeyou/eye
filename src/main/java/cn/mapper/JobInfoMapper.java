@@ -19,8 +19,8 @@ import cn.pojo.job;
  */
 public interface JobInfoMapper {
 
-//	Long selectOfHistoryLastTime();
-//	Long selectOfTodayLastTime();
+	Long selectOfHistoryLastTime();
+	Long selectOfTodayLastTime();
 	
 	int insertToToday(job jobinfo);
 	int insertListToToday(@Param("jobinfos")List<job> jobinfos);

@@ -23,6 +23,7 @@ public class node {
 	private double memory_virtual;//虚拟内存利用率
 	private double CPU_usage;//CPU利用率
 	private double containers_CPU_usage;//容器的聚合CPU利用率
+	private Date created_at;
 	
 	
 	public int getId() {
@@ -127,7 +128,12 @@ public class node {
 	public void setContainers_CPU_usage(double containers_CPU_usage) {
 		this.containers_CPU_usage = containers_CPU_usage;
 	}
-
+	public Date getCreated_at() {
+		return created_at;
+	}
+	public void setCreated_at(Date created_at) {
+		this.created_at = created_at;
+	}
 	
 	
 }

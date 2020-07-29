@@ -1,6 +1,7 @@
 package cn.node;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,7 @@ public class nodeData {
 //			node.setMemory_virtual(memory_virtual);
 //			node.setCPU_usage(cPU_usage);
 //			node.setContainers_CPU_usage(containers_CPU_usage);
+			node.setCreated_at(new Date());
 			lnode.add(node);
 		}
 		return lnode;

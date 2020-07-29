@@ -1,5 +1,7 @@
 package cn.cluster;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -40,7 +42,7 @@ public class clusterData {
 		cluster.setNodes_decommissioned(object.get("appsSubmitted").getAsInt());
 		cluster.setNodes_rebooted(object.get("rebootedNodes").getAsInt());
 		cluster.setNodes_shutdown(-1);//取不到暂置为-1
-		
+		cluster.setCreated_at(new Date());
 		return cluster;
 	}
 }

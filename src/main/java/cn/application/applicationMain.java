@@ -22,6 +22,7 @@ public class applicationMain {
 	private JobInfoService jobInfoService;
 	
 	@Scheduled(fixedDelay = 30000)
+	//@Scheduled(cron="* 0/10 * * * ?")    //每10分钟调度一次 [秒] [分] [小时] [日] [月] [周] [年]
 	public void run() {
 	//	JsonArray arry=getappliction.getApplicationDataSource();
 		JsonArray arry=getappliction.getjobApplicationDataSourceByFile("apps.txt");

@@ -19,7 +19,8 @@ public class clusterMain {
 	@Autowired
 	private ClusterInfoService clusterInfoService;
 	
-	@Scheduled(fixedDelay = 30000)	
+	@Scheduled(fixedDelay = 30000)
+	//@Scheduled(cron="* 0/30 * * * ?")    //每30分钟调度一次 [秒] [分] [小时] [日] [月] [周] [年]
 	public void run() {
 		//JsonObject object = getcluster.getClusterDataSource();
 		JsonObject object = getcluster.getClusterDataSourceByFile("单个cluster.txt");

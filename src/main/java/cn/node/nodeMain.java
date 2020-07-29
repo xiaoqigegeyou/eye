@@ -19,6 +19,7 @@ public class nodeMain {
 	@Autowired
 	private NodeInfoService nodeInfoService;
 	@Scheduled(fixedDelay = 30000)
+	//@Scheduled(cron="* 0/30 * * * ?")    //每30分钟调度一次 [秒] [分] [小时] [日] [月] [周] [年]
 	public void run() {
 		JsonArray array = getnode.getNodeDataSourceByFile("nodes.txt");	
 		List<node> node = nodeData.nodeAnalysis(array);

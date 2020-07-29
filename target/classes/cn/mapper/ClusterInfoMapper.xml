@@ -28,7 +28,8 @@
 	nodes_decommissioning,
 	nodes_decommissioned,
 	nodes_rebooted,
-	nodes_shutdown
+	nodes_shutdown,
+	created_at
 	) values(
 	#{apps_submit},
 	#{apps_complet},
@@ -54,7 +55,8 @@
 	#{nodes_decommissioning},
 	#{nodes_decommissioned},
 	#{nodes_rebooted},
-	#{nodes_shutdown}
+	#{nodes_shutdown},
+	#{created_at}
 	
 	)
   

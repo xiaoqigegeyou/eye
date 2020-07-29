@@ -139,26 +139,25 @@ public class JobInfoService {
 	 * @return  long        
 	 * @throws
 	 */
-//	public long selectOfLast() {
-//		long result = -1L;
-//		Long selectOfHistoryLastTime = jobInfoMapper.selectOfHistoryLastTime();
-//		Long selectOfTodayLastTime = jobInfoMapper.selectOfTodayLastTime();
-//		if(selectOfTodayLastTime == null) {
-//			if(selectOfHistoryLastTime != null) {
-//				result = selectOfHistoryLastTime;
-//			}else {
-//			}
-//		}else {
-//			if(selectOfHistoryLastTime == null) {
-//				result = selectOfTodayLastTime;
-//			}else {
-//				if(selectOfHistoryLastTime.longValue() > selectOfTodayLastTime.longValue()) {
-//					result = selectOfHistoryLastTime;
-//				}else {
-//					result = selectOfTodayLastTime;
-//				}
-//			}
-//		}
-//		return result;
-//	}
+	public long selectOfLast() {
+		long result = -1L;
+		Long selectOfHistoryLastTime = jobInfoMapper.selectOfHistoryLastTime();
+		Long selectOfTodayLastTime = jobInfoMapper.selectOfTodayLastTime();
+		if(selectOfTodayLastTime == null) {
+			if(selectOfHistoryLastTime != null) {
+				result = selectOfHistoryLastTime;
+			}
+		}else {
+			if(selectOfHistoryLastTime == null) {
+				result = selectOfTodayLastTime;
+			}else {
+				if(selectOfHistoryLastTime.longValue() > selectOfTodayLastTime.longValue()) {
+					result = selectOfHistoryLastTime;
+				}else {
+					result = selectOfTodayLastTime;
+				}
+			}
+		}
+		return result;
+	}
 }

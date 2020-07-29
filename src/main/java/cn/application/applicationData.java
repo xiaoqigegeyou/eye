@@ -13,6 +13,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import cn.pojo.job;
+import cn.service.JobInfoService;
 import cn.service.JobstepInfoService;
 import cn.until.DateFormat;
 
@@ -22,12 +23,18 @@ public class applicationData {
 	private job app;
 	@Autowired
 	private JobstepInfoService jobstepInfoService;
+	@Autowired
+	private JobInfoService jobInfoService;
 	
 	public Map<String, List<job>> jobAnalysis(JsonArray array) {
 		Map<String, List<job>> job = new HashMap<String, List<job>>();
 		List<job> runingJob = new ArrayList<job>();
 		List<job> finishedJob = new ArrayList<job>();
+		
+		long lastTime = 0;// 最后一个任务完成的时间戳
+		long tmpTime;// 现在任务时间
 		int j = array.size();// JSON数组大小
+		lastTime = jobInfoService.selectOfLast();// 获得最后一个数据的时间
 		for (int i = 0; i < j; i++) {
 			JsonObject subObject = array.get(i).getAsJsonObject();
 			// 获得名称 CresdaAI_AIInfoDA_GF1_5314231_2018-07-22_GF1_4323_3341763
@@ -66,10 +73,10 @@ public class applicationData {
 				}
 				runingJob.add(app);
 			} else {// 已经完成的(成功和失败的)
-//				tmpTime = Long.parseLong(subObject.get("finishedTime").getAsString());
-//				if (tmpTime <= lastTime) {
-//					continue;
-//				}
+				tmpTime = Long.parseLong(subObject.get("finishedTime").getAsString());
+				if (tmpTime <= lastTime) {
+					continue;
+				}
 				if (jobAllName.indexOf("Un_Tar") != -1) {// 解压的任务
 					String[] nameArray = jobAllName.split("[+]");
 					if (nameArray.length < 5) {// 任务名称不规范,直接舍弃

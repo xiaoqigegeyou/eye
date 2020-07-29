@@ -32,13 +32,12 @@
   </sql>
    
    
- <!--  <select id="selectOfHistoryLastTime" resultType="Long">
-    	SELECT  timeStamp from job_info_history ORDER BY timeStamp DESC LIMIT 1
+ <select id="selectOfHistoryLastTime" resultType="Long">
+    	SELECT  timeStamp from application_info_history ORDER BY timeStamp DESC LIMIT 1
     </select>
   <select id="selectOfTodayLastTime" resultType="Long">
-    	SELECT  timeStamp from job_info_today ORDER BY timeStamp DESC LIMIT 1
-    </select> -->
-  
+    	SELECT  timeStamp from application_info ORDER BY timeStamp DESC LIMIT 1
+    </select> 
   
   <insert id="insertToToday" parameterType="job" >
     insert into application_info (jobName, jobID, 

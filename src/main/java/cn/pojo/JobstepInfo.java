@@ -1,6 +1,6 @@
 package cn.pojo;
 
-public class JobstepInfo {
+public class jobstepInfo {
 
 	private Integer id;
 	private String stepname;
