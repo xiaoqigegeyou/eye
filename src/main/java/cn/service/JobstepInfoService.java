@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import cn.mapper.JobstepInfoMapper;
-import cn.pojo.jobstepInfo;
+import cn.pojo.StepPO;
 
 
 
@@ -25,9 +25,10 @@ public class JobstepInfoService {
 	 * @return  JobstepInfo        
 	 * @throws
 	 */
-	public jobstepInfo getByjobStepName(String jobStepName) {
-		jobstepInfo byjobStepName = jobstepInfoMapper.getByjobStepName(jobStepName);
-		return byjobStepName;
+	public StepPO getByjobStepName(String jobStepName) {
+		
+		return jobstepInfoMapper.getByjobStepName(jobStepName);
+		 
 	}
 	
 	
@@ -38,9 +39,9 @@ public class JobstepInfoService {
 	 * @return  JobstepInfo        
 	 * @throws
 	 */
-	public jobstepInfo getBySuffixName(String suffixName) {
-		jobstepInfo bySuffixName = jobstepInfoMapper.getBySuffixName(suffixName);
-		return bySuffixName;
+	public StepPO getBySuffixName(String suffixName) {
+		
+		return jobstepInfoMapper.getBySuffixName(suffixName);
 	
 	}
 }

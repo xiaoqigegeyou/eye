@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.mapper.NodeInfoMapper">
 
- <insert id="insertNode" parameterType="node">
+ <insert id="insertNode" parameterType="NodePO">
  insert into node_info(node_id,rack,state,host_name,http_address,
 last_health_update,hadoop_version,num_containers,used_memory,
 avail_memory,used_vcore,available_vcote,memory_physical,

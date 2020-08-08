@@ -12,24 +12,25 @@ import org.springframework.stereotype.Component;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
-import cn.pojo.job;
+import cn.pojo.ApplicationPO;
+import cn.pojo.PpMasterPO;
 import cn.service.JobInfoService;
 import cn.service.JobstepInfoService;
 import cn.until.DateFormat;
 
 @Component
-public class applicationData {
+public class ApplicationData {
 	@Autowired
-	private job app;
+	private ApplicationPO app;
 	@Autowired
 	private JobstepInfoService jobstepInfoService;
 	@Autowired
 	private JobInfoService jobInfoService;
 	
-	public Map<String, List<job>> jobAnalysis(JsonArray array) {
-		Map<String, List<job>> job = new HashMap<String, List<job>>();
-		List<job> runingJob = new ArrayList<job>();
-		List<job> finishedJob = new ArrayList<job>();
+	public Map<String, List<ApplicationPO>> applicationAnalysis(JsonArray array) {
+		Map<String, List<ApplicationPO>> job = new HashMap<String, List<ApplicationPO>>();
+		List<ApplicationPO> runingJob = new ArrayList<ApplicationPO>();
+		List<ApplicationPO> finishedJob = new ArrayList<ApplicationPO>();
 		
 		long lastTime = 0;// 最后一个任务完成的时间戳
 		long tmpTime;// 现在任务时间
@@ -41,7 +42,7 @@ public class applicationData {
 			String jobAllName = subObject.get("name").getAsString();
 
 			String  state=subObject.get("state").getAsString();
-//		String  trackingUrl=subObject.get("trackingUrl").getAsString();
+	//		String  trackingUrl=subObject.get("trackingUrl").getAsString();
 			//System.out.println(jobAllName+id+state+user+finalStatus+startedTime+finishedTime+elapsedTime+trackingUrl);
 			if (state.equals("ACCEPTED")) {// 正在队列内的任务，还没有运行
 				continue;
@@ -58,7 +59,7 @@ public class applicationData {
 
 					/** 解压任务用用 */
 					job_UnTar(nameArray, app);
-
+				
 				} else {// 不是正在解压的任务
 					String[] nameArray = jobAllName.split("_");
 					// GF2_4439_3333865
@@ -69,7 +70,19 @@ public class applicationData {
 					app = jsonToJob(subObject);
 					// 非解压任务
 					job_NoUnTar(nameArray, app);
-					runingJob.add(app);
+//					//添加景号与圈号
+//					PpMasterPO po = get_orbit_scene(app.getSatellite_name(), app.getProduct_id());
+//					if(po!=null) {
+//						app.setOrbit_no(po.getOrbit_no());
+//						app.setScene_no(po.getScene_no());
+//					}
+//					runingJob.add(app);
+				}
+				//添加景号与圈号
+				PpMasterPO po = get_orbit_scene(app.getSatellite_name(), app.getProduct_id());
+				if(po!=null) {
+					app.setOrbit_no(po.getOrbit_no());
+					app.setScene_no(po.getScene_no());
 				}
 				runingJob.add(app);
 			} else {// 已经完成的(成功和失败的)
@@ -99,6 +112,12 @@ public class applicationData {
 					job_NoUnTar(nameArray, app);
 
 				}
+				//添加景号与圈号
+				PpMasterPO po = get_orbit_scene(app.getSatellite_name(), app.getProduct_id());
+				if(po!=null) {
+					app.setOrbit_no(po.getOrbit_no());
+					app.setScene_no(po.getScene_no());
+				}
 				finishedJob.add(app);
 			}
 		}
@@ -108,12 +127,12 @@ public class applicationData {
 		}
 		
 	//无需处理的数据
-	private job jsonToJob(JsonObject json) {
-		job app = new job();
+	private ApplicationPO jsonToJob(JsonObject json) {
+		ApplicationPO app = new ApplicationPO();
 		
 		String applicationsid = json.get("id").getAsString();
 		String id = applicationsid.substring(12);
-		app.setJob_id(id);;// 得到Application的id
+		app.setJob_id(id);// 得到Application的id
 		app.setState(json.get("state").getAsString());
 		app.setJob_user(json.get("user").getAsString());// 提交用户
 		app.setFinal_status(json.get("finalStatus").getAsString());// 任务状态
@@ -127,7 +146,7 @@ public class applicationData {
 	}
 	
 	//解压的任务处理 
-	private void job_UnTar(String[] nameArray, job app) {
+	private void job_UnTar(String[] nameArray, ApplicationPO app) {
 		//ZY302_Un_Tar_+Receive_Data+4181+2020-07-01+ZY302_TMS_E114.4_N35.8_20200701_L1A0000696162.tar.gz
 		int setStepID = 0;
 		// sateliteName[0] ==== GF1_Un_Tar_
@@ -149,7 +168,7 @@ public class applicationData {
 		//app.setResultpath("");// 默认预览图像
 	}
 	//未解压
-	private void job_NoUnTar(String[] nameArray, job app) {
+	private void job_NoUnTar(String[] nameArray, ApplicationPO app) {
 		int setStepID = 0;
 		//String jobName = nameArray[5] + "_" + nameArray[6] + "_" + nameArray[7];
 		
@@ -160,6 +179,13 @@ public class applicationData {
 		app.setProduct_id(nameArray[7]);
 		//app.setResultpath("/images/img.jpg");// 默认预览图像
 
+	}
+	//获取圈号与景号
+	public PpMasterPO get_orbit_scene(String satellite_name,String product_id) {
+		
+		
+		return jobInfoService.get_orbit_scene(satellite_name, product_id);
+		
 	}
 	}
 

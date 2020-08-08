@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import cn.mapper.ClusterInfoMapper;
-import cn.pojo.cluster;
+import cn.pojo.ClusterPO;
 
 @Component
 @Transactional
@@ -13,7 +13,7 @@ public class ClusterInfoService {
 	@Autowired
 	private ClusterInfoMapper clusterInfoMapper;
 	
-	public void insertCluster(cluster cluster) {
+	public void insertCluster(ClusterPO cluster) {
 		clusterInfoMapper.insertCluster(cluster);
 	}
 }

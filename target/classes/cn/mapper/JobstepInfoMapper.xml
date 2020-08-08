@@ -1,17 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.mapper.JobstepInfoMapper">
-  <resultMap id="BaseResultMap" type="JobstepInfo">
-    <id column="ID" jdbcType="INTEGER" property="id" />
-    <result column="stepName" jdbcType="VARCHAR" property="stepname" />
-    <result column="suffixName" jdbcType="VARCHAR" property="suffixname" />
-    <result column="stepImage" jdbcType="VARCHAR" property="stepimage" />
-  </resultMap>
-  
-  <select id="getBySuffixName" parameterType="java.lang.String" resultMap="BaseResultMap">
+
+  <select id="getBySuffixName" parameterType="String" resultType="StepPO" >
   	  SELECT * FROM `basic_conf_step` WHERE `suffix_name` = #{suffixName}
   </select>
-   <select id="getByjobStepName" parameterType="java.lang.String" resultMap="BaseResultMap">
+   <select id="getByjobStepName" parameterType="String" resultType="StepPO">
   	  SELECT * FROM `basic_conf_step` WHERE `suffix_name` = #{stepName}
   </select>
 	

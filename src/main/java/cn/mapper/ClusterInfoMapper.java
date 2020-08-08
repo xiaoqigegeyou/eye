@@ -1,8 +1,8 @@
 package cn.mapper;
 
-import cn.pojo.cluster;
+import cn.pojo.ClusterPO;
 
 public interface ClusterInfoMapper {
 	
-	public void insertCluster(cluster cluster);
+	public void insertCluster(ClusterPO cluster);
 }

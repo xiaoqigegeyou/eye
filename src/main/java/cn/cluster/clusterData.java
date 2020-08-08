@@ -7,15 +7,15 @@ import org.springframework.stereotype.Component;
 
 import com.google.gson.JsonObject;
 
-import cn.pojo.cluster;
+import cn.pojo.ClusterPO;
 
 @Component
-public class clusterData {
+public class ClusterData {
 	@Autowired
-	private cluster cluster;
+	private ClusterPO cluster;
 	
 	
-	public cluster clusterAnalysis(JsonObject object) {
+	public ClusterPO clusterAnalysis(JsonObject object) {
 		//cluster.setName(object.get("name").getAsString());
 		cluster.setApps_submit(object.get("appsSubmitted").getAsInt());
 		cluster.setApps_complet(object.get("appsCompleted").getAsInt());

@@ -1,6 +1,6 @@
 package cn.mapper;
 
-import cn.pojo.jobstepInfo;
+import cn.pojo.StepPO;
 
 /**
  * 
@@ -12,7 +12,7 @@ import cn.pojo.jobstepInfo;
 public interface JobstepInfoMapper {
 
 
-	public	jobstepInfo getBySuffixName(String suffixName);
+	public	StepPO getBySuffixName(String suffixName);
 
-	public  jobstepInfo getByjobStepName(String stepName);
+	public  StepPO getByjobStepName(String stepName);
 }

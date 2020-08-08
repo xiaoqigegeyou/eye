@@ -10,20 +10,20 @@ import org.springframework.stereotype.Component;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
-import cn.pojo.cluster;
-import cn.pojo.node;
+import cn.pojo.ClusterPO;
+import cn.pojo.NodePO;
 import cn.until.DateFormat;
 
 @Component
-public class nodeData {
+public class NodeData {
 
 	
-	public List<node> nodeAnalysis(JsonArray array) {
-		List<node> lnode=new ArrayList<node>();
+	public List<NodePO> nodeAnalysis(JsonArray array) {
+		List<NodePO> lnode=new ArrayList<NodePO>();
 		int j = array.size();// JSON数组大小
 		
 		for (int i = 0; i < j; i++) {
-			node node= new node();
+			NodePO node= new NodePO();
 			JsonObject subObject = array.get(i).getAsJsonObject();
 			node.setNode_id(subObject.get("id").getAsString());
 			node.setRack(subObject.get("rack").getAsString());

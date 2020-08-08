@@ -17,7 +17,7 @@ import cn.until.http.JsonHttp;
 public class Getcluster {
 
 	@Autowired
-	private JsonHttp getHtmlSource;
+	private JsonHttp jsonHttp;
 	
 	
 	//从文件获取
@@ -46,8 +46,8 @@ public class Getcluster {
 	//从http中获取
 	public JsonObject getClusterDataSource() {
 		
-		//JsonObject object = getHtmlSource.getJson(CONST.HTTP + CONST.MASTER_DOMAIN + CONST.APPLICATION_URL_END);//使用HTTP接口获得原始数据
-		JsonObject object = getHtmlSource.getJson("http://kj-gpu-master1.bigdata.com:8088/ws/v1/cluster/metrics");
+		//JsonObject object = jsonHttp.getJson(CONST.HTTP + CONST.MASTER_DOMAIN + CONST.APPLICATION_URL_END);//使用HTTP接口获得原始数据
+		JsonObject object = jsonHttp.getJson("http://kj-gpu-master1.bigdata.com:8088/ws/v1/cluster/metrics");
 		object = (JsonObject) object.get("clusterMetrics");
 		
 		return object;

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.mapper.PpDataMapper">
+
+  <select id="selectPp" parameterType="Date" resultType="PpPO">
+	SELECT
+		a.SATELLITEID,
+		a.ORBITID,
+		a.SCENEID,
+		a.PRODUCTID,
+		b.ACTIVITYDEFNAME,
+		b.BEGINTIME,
+		b.FINISHTIME,
+		b.`STATUS` 
+	FROM
+		pp_t_scenetask a JOIN pp_t_sceneactivity b 
+		ON a.COMMTASKID = b.TASKID 
+		AND a.L1WFID = b.PROCESSINSTID 
+		 AND b.FINISHTIME > #{lastFinishTime}
+		<!-- '2020-06-29 14:45:22' -->
+		   
+		
+  </select>
+ 
+	<select id="selectRunningPp"  parameterType="Date" resultType="PpPO">
+	SELECT
+		a.SATELLITEID,
+		a.ORBITID,
+		a.SCENEID,
+		a.PRODUCTID,
+		b.ACTIVITYDEFNAME,
+		b.BEGINTIME,
+		b.FINISHTIME,
+		b.`STATUS` 
+	FROM
+		pp_t_scenetask a JOIN pp_t_sceneactivity b 
+		ON a.COMMTASKID = b.TASKID 
+		AND a.L1WFID = b.PROCESSINSTID 
+		AND b.STATUS=2
+		 AND b.BEGINTIME > #{lastRunningStartTime} 
+		<!--  #{lastRunningStartTime}  -->
+		
+  </select>
+</mapper>

@@ -1,13 +1,16 @@
 package cn.service;
 
+import java.util.Date;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import cn.mapper.JobInfoMapper;
-import cn.pojo.job;
+import cn.pojo.ApplicationPO;
+import cn.pojo.PpMasterPO;
 import cn.until.ListSplit;
 
 
@@ -33,7 +36,7 @@ public class JobInfoService {
 	 * @return  int        
 	 * @throws
 	 */
-	public int insert_job_info_runing(job jobinfo ) {
+	public int insert_job_info_runing(ApplicationPO jobinfo ) {
 		int insertToRuning = jobInfoMapper.insertToRuning(jobinfo);
 		return insertToRuning;
 	}
@@ -45,12 +48,12 @@ public class JobInfoService {
 	 * @return  int        
 	 * @throws
 	 */
-	public int insert_job_info_runing(List<job> list) {
+	public int insert_job_info_runing(List<ApplicationPO> list) {
 		int insertList = -1;
 		if(list != null && list.size()>0) {
 			jobInfoMapper.clearAllRuning();//清空
-			List<List<job>> splitListBycapacity = ListSplit.splitListBycapacity(list, 2000);
-			for(List<job> splitList : splitListBycapacity) {
+			List<List<ApplicationPO>> splitListBycapacity = ListSplit.splitListBycapacity(list, 2000);
+			for(List<ApplicationPO> splitList : splitListBycapacity) {
 				insertList += jobInfoMapper.insertListToRuning(splitList);
 			}
 		}
@@ -66,7 +69,7 @@ public class JobInfoService {
 	 * @return  int        
 	 * @throws
 	 */
-	public int insert_job_info_today(job jobInfo ) {
+	public int insert_job_info_today(ApplicationPO jobInfo ) {
 		int insertToToday = jobInfoMapper.insertToToday(jobInfo);
 		return insertToToday;
 	}
@@ -78,59 +81,19 @@ public class JobInfoService {
 	 * @return  int        
 	 * @throws
 	 */
-	public int insert_job_info_today(List<job> list) {
+	public int insert_job_info_today(List<ApplicationPO> list) {
 		int insertList = -1;
 		if(list != null && list.size()>0) {
-			List<List<job>> splitListBycapacity = ListSplit.splitListBycapacity(list, 2000);
-			for(List<job> splitList : splitListBycapacity) {
+			List<List<ApplicationPO>> splitListBycapacity = ListSplit.splitListBycapacity(list, 2000);
+			for(List<ApplicationPO> splitList : splitListBycapacity) {
 				insertList += jobInfoMapper.insertListToToday(splitList);
 			}
 		}
 		
 		return insertList;
 	}
-	/**
-	 * 
-	 * @Title: insert_job_info_history   
-	 *  <p>application的历史信息   </p>
-	 * @param jobinfo
-	 * @return  int        
-	 * @throws
-	 */
-//	public int insert_job_info_history(job jobinfo) {
-//		int insertToHistory = jobInfoMapper.insertToHistory(jobinfo);
-//		return insertToHistory;
-//	}
 	
-	/**
-	 * 
-	 * @Title: insert_job_info_history   
-	 *  <p>application的历史信息</p>
-	 * @param list
-	 * @return  int        
-	 * @throws
-	 */
-//	public int insert_job_info_history(List<job> list) {
-//		int insertList = -1;
-//		if(list != null && list.size()>0) {
-//			List<List<job>> splitListBycapacity = ListSplit.splitListBycapacity(list, 2000);
-//			for(List<job> splitList : splitListBycapacity) {
-//				insertList += jobInfoMapper.insertListToHistory(splitList);
-//			}
-//		}
-//		return insertList;
-//	}
-	
-	/**
-	 * 
-	 * @Title: selecttest   
-	 *  <p>测试方法   </p>
-	 * @return  List<JobInfo>        
-	 * @throws
-	 */
-	public  List<job> selecttest(){
-		return null;
-	}
+
 	
 	/**
 	 * 
@@ -160,4 +123,17 @@ public class JobInfoService {
 		}
 		return result;
 	}
+	//数据转移
+	public void transfer() {
+		jobInfoMapper.transferApplication();
+		jobInfoMapper.clearAllApplication();
+		
+	}
+	//获取圈号跟景号
+	public PpMasterPO get_orbit_scene(String satellite_name,String product_id) {
+		
+		return jobInfoMapper.get_orbit_scene(satellite_name, product_id);
+		
+	}
+	
 }

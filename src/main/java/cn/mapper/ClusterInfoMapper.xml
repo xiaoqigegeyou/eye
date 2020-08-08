@@ -1,64 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.mapper.ClusterInfoMapper">
-  <insert id="insertCluster"  parameterType="cluster">
+  <insert id="insertCluster"  parameterType="ClusterPO">
   
-  insert into cluster_info (
-  	apps_submit,
-	apps_complet,
-	apps_pending,
-	apps_running,
-	apps_failed,
-	apps_killed,
-	memory_reserved,
-	memory_available,
-	memory_allocated,
-	memory_total,
-	vcore_reserved,
-	vcore_available,
-	vcore_allocated,
-	vcore_total,
-	containers_allocated,
-	containers_reserved,
-	containers_pending,
-	nodes_total,
-	nodes_active,
-	nodes_lost,
-	nodes_unhealthy,
-	nodes_decommissioning,
-	nodes_decommissioned,
-	nodes_rebooted,
-	nodes_shutdown,
-	created_at
-	) values(
-	#{apps_submit},
-	#{apps_complet},
-	#{apps_pending},
-	#{apps_running},
-	#{apps_failed},
-	#{apps_killed},
-	#{memory_reserved},
-	#{memory_available},
-	#{memory_allocated},
-	#{memory_total},
-	#{vcore_reserved},
-	#{vcore_available},
-	#{vcore_allocated},
-	#{vcore_total},
-	#{containers_allocated},
-	#{containers_reserved},
-	#{containers_pending},
-	#{nodes_total},
-	#{nodes_active},
-	#{nodes_lost},
-	#{nodes_unhealthy},
-	#{nodes_decommissioning},
-	#{nodes_decommissioned},
-	#{nodes_rebooted},
-	#{nodes_shutdown},
-	#{created_at}
-	
-	)
+  insert into cluster_info (apps_submit, apps_complet, apps_pending,apps_running,apps_failed,apps_killed,memory_reserved,memory_available,memory_allocated,
+  memory_total,vcore_reserved,vcore_available,vcore_allocated,vcore_total,containers_allocated,containers_reserved,containers_pending,nodes_total,
+  nodes_active,nodes_lost,nodes_unhealthy,nodes_decommissioning,nodes_decommissioned,nodes_rebooted,nodes_shutdown,created_at) 
+  
+  values(#{apps_submit},#{apps_complet},#{apps_pending},#{apps_running},#{apps_failed},#{apps_killed},#{memory_reserved},#{memory_available},
+  #{memory_allocated},#{memory_total},#{vcore_reserved},#{vcore_available},#{vcore_allocated},#{vcore_total},#{containers_allocated},#{containers_reserved},
+  #{containers_pending},#{nodes_total},#{nodes_active},#{nodes_lost},#{nodes_unhealthy},#{nodes_decommissioning},#{nodes_decommissioned},#{nodes_rebooted},
+  #{nodes_shutdown},#{created_at}
+  )
   
   </insert>
 	
