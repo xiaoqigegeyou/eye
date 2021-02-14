@@ -2,18 +2,18 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.mapper.NodeInfoMapper">
 
- <insert id="insertNode" parameterType="NodePO">
- insert into node_info(node_id,rack,state,host_name,http_address,
-last_health_update,hadoop_version,num_containers,used_memory,
-avail_memory,used_vcore,available_vcote,memory_physical,
-memory_virtual,CPU_usage,containers_CPU_usage,created_at
- )values
- <foreach collection="nodes" item="node" separator=",">
- (#{node.node_id},#{node.rack},#{node.state},#{node.host_name},#{node.http_address},
-#{node.last_health_update},#{node.hadoop_version},#{node.num_containers},#{node.used_memory},
-#{node.avail_memory},#{node.used_vcore},#{node.available_vcote},#{node.memory_physical},
-#{node.memory_virtual},#{node.CPU_usage},#{node.containers_CPU_usage},#{node.created_at})
-  </foreach>
- </insert>
-	
+	<insert id="insertNode" parameterType="NodePO">
+		insert into node_info(node_id,rack,state,host_name,http_address,
+		last_health_update,hadoop_version,num_containers,used_memory,
+		avail_memory,used_vcore,available_vcote,memory_physical,
+		memory_virtual,CPU_usage,containers_CPU_usage,created_at
+		)values
+		<foreach collection="nodes" item="node" separator=",">
+			(#{node.node_id},#{node.rack},#{node.state},#{node.host_name},#{node.http_address},
+			#{node.last_health_update},#{node.hadoop_version},#{node.num_containers},#{node.used_memory},
+			#{node.avail_memory},#{node.used_vcore},#{node.available_vcote},#{node.memory_physical},
+			#{node.memory_virtual},#{node.CPU_usage},#{node.containers_CPU_usage},#{node.created_at})
+		</foreach>
+	</insert>
+
 </mapper>

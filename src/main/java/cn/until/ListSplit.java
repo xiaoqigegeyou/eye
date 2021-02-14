@@ -48,16 +48,16 @@ public class ListSplit {
 	 * 
 	 * @param source
 	 * @param capacity 划分完成的单个List的最大容量
-	 * @param <T>
+	 * @param          <T>
 	 * @return
 	 */
 	public static <T> List<List<T>> splitListBycapacity(List<T> source, int capacity) {
 		List<List<T>> result = new ArrayList<List<T>>();
 		if (source != null && source.size() > 0) {
 			int size = source.size();
-			if(size < capacity) {
+			if (size < capacity) {
 				result.add(source);
-			}else {
+			} else {
 				for (int i = 0; i < size;) {
 					List<T> value = null;
 					int end = i + capacity;
@@ -74,6 +74,5 @@ public class ListSplit {
 		}
 		return result;
 	}
-
 
 }

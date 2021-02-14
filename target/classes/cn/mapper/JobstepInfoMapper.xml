@@ -2,11 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.mapper.JobstepInfoMapper">
 
-  <select id="getBySuffixName" parameterType="String" resultType="StepPO" >
-  	  SELECT * FROM `basic_conf_step` WHERE `suffix_name` = #{suffixName}
-  </select>
-   <select id="getByjobStepName" parameterType="String" resultType="StepPO">
-  	  SELECT * FROM `basic_conf_step` WHERE `suffix_name` = #{stepName}
-  </select>
-	
+	<select id="getBySuffixName" parameterType="String" resultType="StepPO">
+		SELECT * FROM `basic_conf_step` WHERE `suffix_name` = #{suffixName}
+	</select>
+	<select id="getByjobStepName" parameterType="String" resultType="StepPO">
+		SELECT * FROM `basic_conf_step` WHERE `suffix_name` = #{stepName}
+	</select>
+
 </mapper>

@@ -10,6 +10,7 @@ import com.google.gson.JsonArray;
 
 import cn.pojo.NodePO;
 import cn.service.NodeInfoService;
+
 @Component
 public class NodeMain {
 	@Autowired
@@ -18,11 +19,12 @@ public class NodeMain {
 	private NodeData nodeData;
 	@Autowired
 	private NodeInfoService nodeInfoService;
-	//@Scheduled(fixedDelay = 30000)
-	@Scheduled(cron="5 0/30 * * * ? ")   //每30分钟调度一次 [秒] [分] [小时] [日] [月] [周] [年]
+
+	// @Scheduled(fixedDelay = 30000)
+	@Scheduled(cron = "5 0/30 * * * ? ") // 每30分钟调度一次 [秒] [分] [小时] [日] [月] [周] [年]
 	public void run() {
-		
-		//JsonArray array = getnode.getNodeDataSourceByFile("nodes.txt");	
+
+		// JsonArray array = getnode.getNodeDataSourceByFile("nodes.txt");
 		JsonArray array = getnode.getApplicationDataSource();
 		List<NodePO> node = nodeData.nodeAnalysis(array);
 		nodeInfoService.insert_node(node);

@@ -16,16 +16,14 @@ import cn.pojo.ApplicationPO;
 import cn.pojo.PpMasterPO;
 import cn.service.JobInfoService;
 
-
-
 public class ApplicationTest {
-	
-	
-public static void main(String[] args) {
-		
-		ApplicationContext applicationContext =new ClassPathXmlApplicationContext("applicationContext.xml");
-	//	JsonArray array=applicationContext.getBean(Getcluster.class).getClusterDataSourceByFile("单个cluster.txt");
-		//applicationContext.getBean(test.class).get11();
+
+	public static void main(String[] args) {
+
+		ApplicationContext applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
+		// JsonArray
+		// array=applicationContext.getBean(Getcluster.class).getClusterDataSourceByFile("单个cluster.txt");
+		// applicationContext.getBean(test.class).get11();
 //		JsonArray array=applicationContext.getBean(Getappliction.class).getjobApplicationDataSourceByFile("apps.txt");
 //		
 //		Map<String, List<ApplicationPO>> applicationAnalysisResult = applicationContext.getBean(ApplicationData.class).applicationAnalysis(array);//得到job分析结果
@@ -35,9 +33,9 @@ public static void main(String[] args) {
 //		   System.out.println(a.toString());
 //		   applicationContext.getBean(JobInfoService.class).insert_job_info_runing(runingJobList);
 //		 applicationContext.getBean(JobInfoService.class).insert_job_info_today(finishedJobList);
-		 System.out.println("成功");
-		 PpMasterPO pp = applicationContext.getBean(JobInfoService.class).get_orbit_scene("ZY302", "703803");
-		 System.out.println(pp.getOrbit_no()+" "+pp.getScene_no());
-		//System.out.println(runingJobList.get(0).toString());
+		System.out.println("成功");
+		PpMasterPO pp = applicationContext.getBean(JobInfoService.class).get_orbit_scene("ZY302", "703803");
+		System.out.println(pp.getOrbit_no() + " " + pp.getScene_no());
+		// System.out.println(runingJobList.get(0).toString());
 	}
 }

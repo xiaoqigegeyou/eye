@@ -12,7 +12,7 @@ import cn.pojo.ClusterPO;
 public class ClusterInfoService {
 	@Autowired
 	private ClusterInfoMapper clusterInfoMapper;
-	
+
 	public void insertCluster(ClusterPO cluster) {
 		clusterInfoMapper.insertCluster(cluster);
 	}

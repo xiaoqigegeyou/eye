@@ -2,36 +2,35 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.mapper.MapInfoMapper">
 
- <insert id="insert_map" parameterType="MapPO">
- 	insert into map_info(
-	job_info_id,task_id,task_name,map_node,start_time,finished_time,elapsed_time,state)
-	values
- 	<foreach collection="mapinfos" item="mapinfo" separator=",">
- 	(#{mapinfo.job_info_id},#{mapinfo.task_id},#{mapinfo.task_name},#{mapinfo.map_node},#{mapinfo.start_time},
-	#{mapinfo.finished_time},#{mapinfo.elapsed_time},#{mapinfo.state}
- 	)
-	</foreach>
- </insert>
-	
-	<!-- 	//转移map数据
-		void  transferMap();
-		//清除map_info的数据
-		void  clearAllMap(); -->
-		
-	<insert id="transferMap">		
-		 INSERT INTO map_info_history ( job_info_id, task_id, task_name, map_node, start_time, finished_time, elapsed_time, state ) SELECT
-			job_info_id,
-			task_id,
-			task_name,
-			map_node,
-			start_time,
-			finished_time,
-			elapsed_time,
-			state 
-		FROM
-			map_info
+	<insert id="insert_map" parameterType="MapPO">
+		insert into map_info(
+		job_info_id,task_id,task_name,map_node,start_time,finished_time,elapsed_time,state)
+		values
+		<foreach collection="mapinfos" item="mapinfo" separator=",">
+			(#{mapinfo.job_info_id},#{mapinfo.task_id},#{mapinfo.task_name},#{mapinfo.map_node},#{mapinfo.start_time},
+			#{mapinfo.finished_time},#{mapinfo.elapsed_time},#{mapinfo.state}
+			)
+		</foreach>
 	</insert>
-	
+
+	<!-- //转移map数据 void transferMap(); //清除map_info的数据 void clearAllMap(); -->
+
+	<insert id="transferMap">
+		INSERT INTO map_info_history ( job_info_id, task_id, task_name, map_node,
+		start_time, finished_time, elapsed_time, state ) SELECT
+		job_info_id,
+		task_id,
+		task_name,
+		map_node,
+		start_time,
+		finished_time,
+		elapsed_time,
+		state
+		FROM
+		map_info
+		where CURDATE() > finished_time 
+	</insert>
+
 	<update id="clearAllMap">
 		TRUNCATE TABLE map_info
 	</update>

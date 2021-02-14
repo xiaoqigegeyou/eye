@@ -3,120 +3,139 @@
 <mapper namespace="cn.mapper.JobInfoMapper">
 
 
-  <sql id="Base_Column_List">
-    ID, jobName, jobID, state, priority, progress, productID, sateliteName, jobUser, 
-    finalStatus, startedTime, finishedTime, elapsedTime, trackingUrl, timestamp, provinceID, 
-    stepID, resultPath, remark
-  </sql>
-  
-  <!-- 获得景号跟圈号  PpMasterPO get_orbit_scene(); -->
-   	<select id="get_orbit_scene" parameterType="String" resultType="PpMasterPO">
-   		select DISTINCT orbit_no,scene_no from image_process_flow where satellite_name=#{satellite_name} and product_id=#{product_id}
-   	</select>
-   	
- 	<select id="selectOfHistoryLastTime" resultType="Long">
-    	SELECT  timeStamp from application_info_history where step_id > 4 ORDER BY timeStamp DESC LIMIT 1
-    </select>
-    
-  	<select id="selectOfTodayLastTime" resultType="Long">
-    	SELECT  timeStamp from application_info where step_id > 4  ORDER BY timeStamp DESC LIMIT 1
-   </select> 
+	<sql id="Base_Column_List">
+		ID, jobName, jobID, state, priority, progress, productID, sateliteName,
+		jobUser,
+		finalStatus, startedTime, finishedTime, elapsedTime, trackingUrl, timestamp,
+		provinceID,
+		stepID, resultPath, remark
+	</sql>
 
-	
-	
- <!--  <insert id="insertToToday" parameterType="ApplicationPO" >
-    insert into application_info (jobName, jobID, 
-      state, priority, progress, 
-      productID, sateliteName, jobUser, 
-      finalStatus, startedTime, finishedTime, 
-      elapsedTime, trackingUrl, timestamp, 
-      provinceID, stepID, resultPath, 
-      remark)
-    values ( #{jobname,jdbcType=VARCHAR}, #{jobid,jdbcType=VARCHAR}, 
-      #{state,jdbcType=VARCHAR}, #{priority,jdbcType=INTEGER}, #{progress,jdbcType=VARCHAR}, 
-      #{productid,jdbcType=VARCHAR}, #{satelitename,jdbcType=VARCHAR}, #{jobuser,jdbcType=VARCHAR}, 
-      #{finalstatus,jdbcType=VARCHAR}, #{startedtime,jdbcType=TIMESTAMP}, #{finishedtime,jdbcType=TIMESTAMP}, 
-      #{elapsedtime,jdbcType=REAL}, #{trackingurl,jdbcType=VARCHAR}, #{timestamp,jdbcType=VARCHAR}, 
-      #{provinceid,jdbcType=VARCHAR}, #{stepid,jdbcType=INTEGER}, #{resultpath,jdbcType=VARCHAR}, 
-      #{remark,jdbcType=VARCHAR})
-  </insert> -->
-  <insert id="insertListToToday" parameterType="ApplicationPO">
-   	insert into application_info (job_id,
-      state, 
-      product_id, satellite_name, job_user, 
-      final_status, started_time, finished_time, 
-      elapsed_time, tracking_url, timestamp, 
-      province_id, step_id,orbit_no,scene_no)
-      values 
-    <foreach collection="jobinfos" item="jobinfo" separator=",">
-      (#{jobinfo.job_id,jdbcType=VARCHAR},  
-      #{jobinfo.state,jdbcType=VARCHAR},  #{jobinfo.product_id,jdbcType=VARCHAR}, 
-      #{jobinfo.satellite_name,jdbcType=VARCHAR}, #{jobinfo.job_user,jdbcType=VARCHAR}, 
-      #{jobinfo.final_status,jdbcType=VARCHAR}, #{jobinfo.started_time,jdbcType=TIMESTAMP}, 
-      #{jobinfo.finished_time,jdbcType=TIMESTAMP}, #{jobinfo.elapsed_time,jdbcType=REAL}, 
-      #{jobinfo.tracking_url,jdbcType=VARCHAR}, #{jobinfo.timestamp,jdbcType=VARCHAR}, 
-      #{jobinfo.province_id,jdbcType=VARCHAR}, #{jobinfo.step_id,jdbcType=INTEGER},
-      #{jobinfo.orbit_no,jdbcType=VARCHAR},#{jobinfo.scene_no,jdbcType=VARCHAR}
-      )
-    </foreach>
-  </insert>
+	<!-- 获得景号跟圈号 PpMasterPO get_orbit_scene(); -->
+	<select id="get_orbit_scene" parameterType="String" resultType="PpMasterPO">
+		select DISTINCT orbit_no,scene_no from image_process_flow where
+		satellite_name=#{satellite_name} and product_id=#{product_id}
+	</select>
 
-<!--   <insert id="insertToRuning" parameterType="ApplicationPO" >
-    insert into application_info_run (job_id,
-      state, 
-      product_id, satellite_name, job_user, 
-      final_status, started_time, finished_time, 
-      elapsed_time, tracking_url, timestamp, 
-      province_id, step_id)
-      values(#{jobinfo.job_id,jdbcType=VARCHAR},  
-      #{jobinfo.state,jdbcType=VARCHAR},  #{jobinfo.product_id,jdbcType=VARCHAR}, 
-      #{jobinfo.satellite_name,jdbcType=VARCHAR}, #{jobinfo.job_user,jdbcType=VARCHAR}, 
-      #{jobinfo.final_status,jdbcType=VARCHAR}, #{jobinfo.started_time,jdbcType=TIMESTAMP}, 
-      #{jobinfo.finished_time,jdbcType=TIMESTAMP}, #{jobinfo.elapsed_time,jdbcType=REAL}, 
-      #{jobinfo.tracking_url,jdbcType=VARCHAR}, #{jobinfo.timestamp,jdbcType=VARCHAR}, 
-      #{jobinfo.province_id,jdbcType=VARCHAR}, #{jobinfo.step_id,jdbcType=INTEGER}
-      )
-  </insert>  -->
-  <insert id="insertListToRuning" parameterType="ApplicationPO">
-  	insert into application_info_run (job_id,
-      state, 
-      product_id, satellite_name, job_user, 
-      final_status, started_time, finished_time, 
-      elapsed_time, tracking_url, timestamp, 
-      province_id, step_id,orbit_no,scene_no)
-      values 
-    <foreach collection="jobinfos" item="jobinfo" separator=",">
-      (#{jobinfo.job_id,jdbcType=VARCHAR},  
-      #{jobinfo.state,jdbcType=VARCHAR},  #{jobinfo.product_id,jdbcType=VARCHAR}, 
-      #{jobinfo.satellite_name,jdbcType=VARCHAR}, #{jobinfo.job_user,jdbcType=VARCHAR}, 
-      #{jobinfo.final_status,jdbcType=VARCHAR}, #{jobinfo.started_time,jdbcType=TIMESTAMP}, 
-      #{jobinfo.finished_time,jdbcType=TIMESTAMP}, #{jobinfo.elapsed_time,jdbcType=REAL}, 
-      #{jobinfo.tracking_url,jdbcType=VARCHAR}, #{jobinfo.timestamp,jdbcType=VARCHAR}, 
-      #{jobinfo.province_id,jdbcType=VARCHAR}, #{jobinfo.step_id,jdbcType=INTEGER},
-       #{jobinfo.orbit_no,jdbcType=VARCHAR},#{jobinfo.scene_no,jdbcType=VARCHAR}
-      )
-    </foreach>
-  </insert>
-  
-  <update id="clearAllRuning">
-  		TRUNCATE TABLE application_info_run
-  </update>
+	<select id="selectOfHistoryLastTime" resultType="Long">
+		SELECT timeStamp from application_info_history where step_id > 4 ORDER BY
+		timeStamp DESC LIMIT 1
+	</select>
 
-<!-- //转移application数据
-	void  transferApplication();
-	//清除application_info的数据
-	void  clearAllApplication(); -->
-	
-	<insert id="transferApplication">
-		INSERT INTO application_info_history(job_id, job_name,  state,  product_id,  satellite_name,  job_user,  final_status,  started_time,  finished_time,  elapsed_time,  tracking_url,  TIMESTAMP,  province_id,  step_id,  result_path,  remark,  orbit_no,  scene_no ) SELECT
-job_id, job_name,  state,  product_id,  satellite_name,  job_user,  final_status,  started_time,  finished_time,  elapsed_time,  tracking_url,  TIMESTAMP,  province_id,  step_id,  result_path,  remark,  orbit_no,  scene_no 
-FROM
-	application_info
+	<select id="selectOfTodayLastTime" resultType="Long">
+		SELECT timeStamp from application_info where step_id > 4 ORDER BY timeStamp
+		DESC LIMIT 1
+	</select>
+
+
+
+	<!-- <insert id="insertToToday" parameterType="ApplicationPO" > insert into 
+		application_info (jobName, jobID, state, priority, progress, productID, sateliteName, 
+		jobUser, finalStatus, startedTime, finishedTime, elapsedTime, trackingUrl, 
+		timestamp, provinceID, stepID, resultPath, remark) values ( #{jobname,jdbcType=VARCHAR}, 
+		#{jobid,jdbcType=VARCHAR}, #{state,jdbcType=VARCHAR}, #{priority,jdbcType=INTEGER}, 
+		#{progress,jdbcType=VARCHAR}, #{productid,jdbcType=VARCHAR}, #{satelitename,jdbcType=VARCHAR}, 
+		#{jobuser,jdbcType=VARCHAR}, #{finalstatus,jdbcType=VARCHAR}, #{startedtime,jdbcType=TIMESTAMP}, 
+		#{finishedtime,jdbcType=TIMESTAMP}, #{elapsedtime,jdbcType=REAL}, #{trackingurl,jdbcType=VARCHAR}, 
+		#{timestamp,jdbcType=VARCHAR}, #{provinceid,jdbcType=VARCHAR}, #{stepid,jdbcType=INTEGER}, 
+		#{resultpath,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}) </insert> -->
+	<insert id="insertListToToday" parameterType="ApplicationPO">
+		insert into application_info (job_id,
+		state,
+		product_id, satellite_name, job_user,
+		final_status, started_time, finished_time,
+		elapsed_time, tracking_url, timestamp,
+		province_id, step_id,orbit_no,scene_no)
+		values
+		<foreach collection="jobinfos" item="jobinfo" separator=",">
+			(#{jobinfo.job_id,jdbcType=VARCHAR},
+			#{jobinfo.state,jdbcType=VARCHAR},
+			#{jobinfo.product_id,jdbcType=VARCHAR},
+			#{jobinfo.satellite_name,jdbcType=VARCHAR},
+			#{jobinfo.job_user,jdbcType=VARCHAR},
+			#{jobinfo.final_status,jdbcType=VARCHAR},
+			#{jobinfo.started_time,jdbcType=TIMESTAMP},
+			#{jobinfo.finished_time,jdbcType=TIMESTAMP},
+			#{jobinfo.elapsed_time,jdbcType=REAL},
+			#{jobinfo.tracking_url,jdbcType=VARCHAR},
+			#{jobinfo.timestamp,jdbcType=VARCHAR},
+			#{jobinfo.province_id,jdbcType=VARCHAR},
+			#{jobinfo.step_id,jdbcType=INTEGER},
+			#{jobinfo.orbit_no,jdbcType=VARCHAR},#{jobinfo.scene_no,jdbcType=VARCHAR}
+			)
+		</foreach>
 	</insert>
+
+	<!-- <insert id="insertToRuning" parameterType="ApplicationPO" > insert 
+		into application_info_run (job_id, state, product_id, satellite_name, job_user, 
+		final_status, started_time, finished_time, elapsed_time, tracking_url, timestamp, 
+		province_id, step_id) values(#{jobinfo.job_id,jdbcType=VARCHAR}, #{jobinfo.state,jdbcType=VARCHAR}, 
+		#{jobinfo.product_id,jdbcType=VARCHAR}, #{jobinfo.satellite_name,jdbcType=VARCHAR}, 
+		#{jobinfo.job_user,jdbcType=VARCHAR}, #{jobinfo.final_status,jdbcType=VARCHAR}, 
+		#{jobinfo.started_time,jdbcType=TIMESTAMP}, #{jobinfo.finished_time,jdbcType=TIMESTAMP}, 
+		#{jobinfo.elapsed_time,jdbcType=REAL}, #{jobinfo.tracking_url,jdbcType=VARCHAR}, 
+		#{jobinfo.timestamp,jdbcType=VARCHAR}, #{jobinfo.province_id,jdbcType=VARCHAR}, 
+		#{jobinfo.step_id,jdbcType=INTEGER} ) </insert> -->
+	<insert id="insertListToRuning" parameterType="ApplicationPO">
+		insert into application_info_run (job_id,
+		state,
+		product_id, satellite_name, job_user,
+		final_status, started_time, finished_time,
+		elapsed_time, tracking_url, timestamp,
+		province_id, step_id,orbit_no,scene_no)
+		values
+		<foreach collection="jobinfos" item="jobinfo" separator=",">
+			(#{jobinfo.job_id,jdbcType=VARCHAR},
+			#{jobinfo.state,jdbcType=VARCHAR},
+			#{jobinfo.product_id,jdbcType=VARCHAR},
+			#{jobinfo.satellite_name,jdbcType=VARCHAR},
+			#{jobinfo.job_user,jdbcType=VARCHAR},
+			#{jobinfo.final_status,jdbcType=VARCHAR},
+			#{jobinfo.started_time,jdbcType=TIMESTAMP},
+			#{jobinfo.finished_time,jdbcType=TIMESTAMP},
+			#{jobinfo.elapsed_time,jdbcType=REAL},
+			#{jobinfo.tracking_url,jdbcType=VARCHAR},
+			#{jobinfo.timestamp,jdbcType=VARCHAR},
+			#{jobinfo.province_id,jdbcType=VARCHAR},
+			#{jobinfo.step_id,jdbcType=INTEGER},
+			#{jobinfo.orbit_no,jdbcType=VARCHAR},#{jobinfo.scene_no,jdbcType=VARCHAR}
+			)
+		</foreach>
+	</insert>
+
 	
+	<delete id="clearPpRuning">
+	delete from application_info_run where step_id &lt;5
+	</delete>
+	<delete id="clearAppRunning">
+	delete from application_info_run where step_id >4
+	</delete>
+<!-- 	<update id="clearAllRuning">
+		TRUNCATE TABLE application_info_run
+	</update> -->
+
+
+	<!-- //转移application数据 void transferApplication(); //清除application_info的数据 
+		void clearAllApplication(); -->
+
+	<insert id="transferApplication">
+		INSERT INTO application_info_history(job_id,
+		job_name, state, product_id, satellite_name, job_user, final_status,
+		started_time, finished_time, elapsed_time, tracking_url, TIMESTAMP,
+		province_id, step_id, result_path, remark, orbit_no, scene_no ) SELECT
+		job_id, job_name, state, product_id, satellite_name, job_user,
+		final_status, started_time, finished_time, elapsed_time, tracking_url,
+		TIMESTAMP, province_id, step_id, result_path, remark, orbit_no,
+		scene_no
+		FROM
+		application_info 
+		where CURDATE() > finished_time 
+		
+	</insert>
+
 	<update id="clearAllApplication">
 		TRUNCATE TABLE application_info
 	</update>
-	
+
 
 </mapper>

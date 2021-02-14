@@ -13,17 +13,17 @@ import cn.until.DateFormat;
 public class MapData {
 	@Autowired
 	private GetMap getMap;
-	
-		public  MapPO mapAnalysis(JsonArray array) {
-			JsonObject object = array.get(0).getAsJsonObject();
-			
-			MapPO map = new MapPO();
-			map.setMap_node(object.get("nodeHttpAddress").getAsString());
-			map.setStart_time(DateFormat.toDate(object.get("startTime").getAsString()));
-			map.setFinished_time(DateFormat.toDate(object.get("finishTime").getAsString()));
-			map.setElapsed_time(Float.valueOf(object.get("elapsedTime").getAsString()));
-			map.setState(object.get("state").getAsString());
-			
-			return map;
-		}
+
+	public MapPO mapAnalysis(JsonArray array) {
+		JsonObject object = array.get(0).getAsJsonObject();
+
+		MapPO map = new MapPO();
+		map.setMap_node(object.get("nodeHttpAddress").getAsString());
+		map.setStart_time(DateFormat.toDate(object.get("startTime").getAsString()));
+		map.setFinished_time(DateFormat.toDate(object.get("finishTime").getAsString()));
+		map.setElapsed_time(Float.valueOf(object.get("elapsedTime").getAsString()));
+		map.setState(object.get("state").getAsString());
+
+		return map;
+	}
 }

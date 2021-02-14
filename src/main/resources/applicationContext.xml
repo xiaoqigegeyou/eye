@@ -4,15 +4,24 @@
 	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:task="http://www.springframework.org/schema/task"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
-	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd http://www.springframework.org/schema/util 
-	http://www.springframework.org/schema/util/spring-util-4.0.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.0.xsd" default-lazy-init="true">
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/context
+	 http://www.springframework.org/schema/context/spring-context-4.0.xsd
+	http://www.springframework.org/schema/aop 
+	http://www.springframework.org/schema/aop/spring-aop-4.0.xsd 
+	http://www.springframework.org/schema/tx 
+	http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+	http://www.springframework.org/schema/util 
+	http://www.springframework.org/schema/util/spring-util-4.0.xsd
+	http://www.springframework.org/schema/task
+	http://www.springframework.org/schema/task/spring-task-3.0.xsd">
 
 	<!-- 配置 读取properties文件 jdbc.properties -->
 	<context:property-placeholder location="classpath:jdbc.properties" />
 
-	<!-- 配置 数据源1 -->
-	<bean id="defDataSource" class="com.alibaba.druid.pool.DruidDataSource">
+	<!-- 配置 数据源 -->
+	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
 		<property name="driverClassName" value="${jdbc.driver}" />
 		<property name="url" value="${jdbc.url}" />
 		<property name="username" value="${jdbc.username}" />
@@ -35,64 +44,14 @@
       <property name="testOnBorrow" value="false" />
       <property name="testOnReturn" value="false" />
 	</bean>
-	<!-- 配置数据源2 -->
-	<bean id="ZY302DataSource" class="com.alibaba.druid.pool.DruidDataSource">
-		<property name="driverClassName" value="${ZY302.jdbc.driver}" />
-		<property name="url" value="${ZY302.jdbc.url}" />
-		<property name="username" value="${ZY302.jdbc.username}" />
-		<property name="password" value="${ZY302.jdbc.password}" />
-		<!-- 配置初始化大小、最小、最大 -->
-      <property name="initialSize" value="1" />
-      <property name="minIdle" value="1" /> 
-      <property name="maxActive" value="20" />
-
-      <!-- 配置获取连接等待超时的时间 -->
-      <property name="maxWait" value="60000" />
-        <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
-      <property name="timeBetweenEvictionRunsMillis" value="60000" />
-
-      <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
-      <property name="minEvictableIdleTimeMillis" value="300000" />
-
-      <property name="validationQuery" value="SELECT 'x'" />
-      <property name="testWhileIdle" value="true" />
-      <property name="testOnBorrow" value="false" />
-      <property name="testOnReturn" value="false" />
-	</bean>
-	 <!-- 数据库连接池 -->
-    <bean id="dynamicDataSource" class="cn.until.dataSource.DynamicDataSource">
-        <property name="targetDataSources">
-            <map key-type="java.lang.String">
-                <entry value-ref="defDataSource" key="defDataSource"/>
-                <entry value-ref="ZY302DataSource" key="ZY302DataSource"/>
-            </map>
-        </property>
-   <property name="defaultTargetDataSource" ref="defDataSource"/><!--   默认使用defDataSource的数据源 -->
-    </bean>
 
 	<!-- 配置SqlSessionFactory -->
-	<bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
+	<bean class="org.mybatis.spring.SqlSessionFactoryBean">
 		<!-- 设置MyBatis核心配置文件 -->
 		<property name="configLocation" value="classpath:sqlMapConfig.xml" />
 		<!-- 设置数据源 -->
-		<property name="dataSource" ref="dynamicDataSource" />
+		<property name="dataSource" ref="dataSource" />
 	</bean>
-	<!--配置一个可以进行批量执行的sqlSession  -->
-     <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
-         <constructor-arg name="sqlSessionFactory" ref="sqlSessionFactoryBean"></constructor-arg>
-         <constructor-arg name="executorType" value="BATCH"></constructor-arg>
-     </bean>
-     
-     <!-- 配置切面的Bean -->
-     <bean id="dataSourceExchange" class="cn.until.dataSource.DataSourceExchange"/>
-     
-     <!-- 配置AOP -->
-     <aop:config>
-         <!-- 配置切点表达式  -->
-         <aop:pointcut id="servicePointcut" expression="execution(* cn.service.*.*(..))"/>
-         <!-- 关键配置，切换数据源一定要比持久层代码更先执行（事务也算持久层代码） <aop:advisor advice-ref="txAdvice" pointcut-ref="service" order="2"/> -->
-         <aop:advisor advice-ref="dataSourceExchange" pointcut-ref="servicePointcut" order="1"/>
-      </aop:config>
 
 	<!-- 配置Mapper扫描 -->
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
@@ -101,10 +60,10 @@
 	</bean>
 	<!-- 注解事务 -->
 	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-			<property name="dataSource" ref="dynamicDataSource"/>
+			<property name="dataSource" ref="dataSource"/>
 	</bean>
 	<!--开启注解  -->
-	<tx:annotation-driven transaction-manager="transactionManager" order ="2"/>
+	<tx:annotation-driven transaction-manager="transactionManager"/>
 	<!-- 配置controller扫描包例如@Controler @Service -->
 	<context:component-scan base-package="cn"></context:component-scan>
 	

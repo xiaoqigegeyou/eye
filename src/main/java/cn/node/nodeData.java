@@ -17,13 +17,12 @@ import cn.until.DateFormat;
 @Component
 public class NodeData {
 
-	
 	public List<NodePO> nodeAnalysis(JsonArray array) {
-		List<NodePO> lnode=new ArrayList<NodePO>();
+		List<NodePO> lnode = new ArrayList<NodePO>();
 		int j = array.size();// JSON数组大小
-		
+
 		for (int i = 0; i < j; i++) {
-			NodePO node= new NodePO();
+			NodePO node = new NodePO();
 			JsonObject subObject = array.get(i).getAsJsonObject();
 			node.setNode_id(subObject.get("id").getAsString());
 			node.setRack(subObject.get("rack").getAsString());

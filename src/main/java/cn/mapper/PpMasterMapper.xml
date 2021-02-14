@@ -1,49 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.mapper.PpMasterMapper">
-  <!--获得pp表最后数据的时间  -->
-	<select id="getLastFinishTime" resultType="Date">
-		SELECT  finished_time from image_process_flow ORDER BY finished_time DESC LIMIT 1
+	<!--获得pp表最后数据的时间 -->
+	<select id="getLastFinishTime" parameterType="String"
+		resultType="Date">
+		SELECT finished_time from image_process_flow 
+		where
+		satellite_name=#{satellite_name} ORDER BY finished_time DESC LIMIT 1
 	</select>
-	
-	<!--  获取running表的pp最后开始时间 -->
-	<select id="getLastRunningStartTime" resultType="Date">
-		 SELECT  started_time from application_info_run where step_id &lt; 5 ORDER BY started_time DESC LIMIT 1 <!--  where step_id < 5  -->
+
+	<!-- 获取running表的pp最后开始时间 -->
+	<select id="getLastRunningStartTime" parameterType="String"
+		resultType="Date">
+		SELECT started_time from application_info_run 
+		where step_id &lt; 5 and
+		satellite_name=#{satellite_name} ORDER BY started_time DESC LIMIT 1 <!-- 
+			where step_id < 5 -->
 	</select>
-	
-	<!-- 插入pp数据  -->
+
+	<!-- 插入pp数据 -->
 	<insert id="insertListToPp" parameterType="PpMasterPO">
-  	INSERT INTO image_process_flow( satellite_name, orbit_no, scene_no, product_id, started_time, finished_time, step_id, state )
-  	VALUES
-    <foreach collection="ppLists" item="ppList" separator=",">
-      (#{ppList.satellite_name},#{ppList.orbit_no},#{ppList.scene_no},#{ppList.product_id},
-	#{ppList.started_time},#{ppList.finished_time},#{ppList.step_id},#{ppList.state})
-    </foreach>
-  </insert>
-
-  <!--插入Running pp数据  -->
-	<insert id="insertRunningPp" parameterType="PpMasterPO">
-  	INSERT INTO application_info_run( satellite_name, orbit_no, scene_no, product_id, started_time, finished_time, step_id, final_status )
-  	VALUES
-    <foreach collection="ppRunningLists" item="ppRunningList" separator=",">
-      (#{ppRunningList.satellite_name},#{ppRunningList.orbit_no},#{ppRunningList.scene_no},#{ppRunningList.product_id},
-	#{ppRunningList.started_time},#{ppRunningList.finished_time},#{ppRunningList.step_id},#{ppRunningList.state})
-    </foreach>
-  </insert>
- 
-	
-
-	
- 
- <!-- 把pp插入app  -->
-	<insert id="insertPpToApp" parameterType="PpMasterPO">
-	INSERT INTO application_info( satellite_name, orbit_no, scene_no, product_id, started_time, finished_time, step_id, final_status )
-	VALUES
-	<foreach collection="ppToAppLists" item="ppToAppList" separator=",">
-	(#{ppToAppList.satellite_name},#{ppToAppList.orbit_no},#{ppToAppList.scene_no},#{ppToAppList.product_id},
-	#{ppToAppList.started_time},#{ppToAppList.finished_time},#{ppToAppList.step_id},#{ppToAppList.state})
-	
-    </foreach> 
+		INSERT INTO image_process_flow( satellite_name, orbit_no, scene_no,
+		product_id, started_time, finished_time, step_id, state )
+		VALUES
+		<foreach collection="ppLists" item="ppList" separator=",">
+			(#{ppList.satellite_name},#{ppList.orbit_no},#{ppList.scene_no},#{ppList.product_id},
+			#{ppList.started_time},#{ppList.finished_time},#{ppList.step_id},#{ppList.state})
+		</foreach>
 	</insert>
+
+	<!--插入Running pp数据 -->
+	<insert id="insertRunningPp" parameterType="PpMasterPO">
+		INSERT INTO application_info_run( satellite_name, orbit_no, scene_no,
+		product_id, started_time, finished_time, step_id, final_status )
+		VALUES
+		<foreach collection="ppRunningLists" item="ppRunningList"
+			separator=",">
+			(#{ppRunningList.satellite_name},#{ppRunningList.orbit_no},#{ppRunningList.scene_no},#{ppRunningList.product_id},
+			#{ppRunningList.started_time},#{ppRunningList.finished_time},#{ppRunningList.step_id},#{ppRunningList.state})
+		</foreach>
+	</insert>
+
+	<!-- 把pp插入app -->
+	<insert id="insertPpToApp" parameterType="PpMasterPO">
+		INSERT INTO application_info( satellite_name, orbit_no, scene_no,
+		product_id, started_time, finished_time, step_id, final_status )
+		VALUES
+		<foreach collection="ppToAppLists" item="ppToAppList"
+			separator=",">
+			(#{ppToAppList.satellite_name},#{ppToAppList.orbit_no},#{ppToAppList.scene_no},#{ppToAppList.product_id},
+			#{ppToAppList.started_time},#{ppToAppList.finished_time},#{ppToAppList.step_id},#{ppToAppList.state})
+
+		</foreach>
+	</insert>
+	<!-- //获得basic_conf_pp_satellite表
+	List<DataSourcePO> getDataSource(); -->
+	<select id="getDataSource" resultType="DataSourcePO">
+		select * from basic_conf_pp_satellite
+	</select>
 	
 </mapper>

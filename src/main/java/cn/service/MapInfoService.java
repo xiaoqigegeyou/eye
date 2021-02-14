@@ -16,22 +16,23 @@ import cn.until.ListSplit;
 public class MapInfoService {
 	@Autowired
 	private MapInfoMapper mapInfoMapper;
-	
+
 	public void insertMap(List<MapPO> mapList) {
-		
-		if(mapList != null && mapList.size()>0) {
-			
+
+		if (mapList != null && mapList.size() > 0) {
+
 			List<List<MapPO>> splitListBycapacity = ListSplit.splitListBycapacity(mapList, 2000);
-			for(List<MapPO> splitList : splitListBycapacity) {
-				 mapInfoMapper.insert_map(splitList);
+			for (List<MapPO> splitList : splitListBycapacity) {
+				mapInfoMapper.insert_map(splitList);
 			}
 		}
-		
+
 	}
-	//数据转移
+
+	// 数据转移
 	public void transfer() {
 		mapInfoMapper.transferMap();
 		mapInfoMapper.clearAllMap();
-		
+
 	}
 }

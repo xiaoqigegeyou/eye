@@ -14,13 +14,13 @@ import cn.pojo.NodePO;
 public class NodeInfoService {
 	@Autowired
 	private NodeInfoMapper nodeInfoMapper;
-	
-		public int insert_node(List<NodePO> lnode) {
-			int insertList = -1;
-			if(lnode != null && lnode.size()>0) {
-				nodeInfoMapper.insertNode(lnode);
-			}
-			return insertList;
-	
+
+	public int insert_node(List<NodePO> lnode) {
+		int insertList = -1;
+		if (lnode != null && lnode.size() > 0) {
+			nodeInfoMapper.insertNode(lnode);
 		}
+		return insertList;
+
+	}
 }

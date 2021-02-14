@@ -13,10 +13,9 @@ import cn.pojo.ClusterPO;
 public class ClusterData {
 	@Autowired
 	private ClusterPO cluster;
-	
-	
+
 	public ClusterPO clusterAnalysis(JsonObject object) {
-		//cluster.setName(object.get("name").getAsString());
+		// cluster.setName(object.get("name").getAsString());
 		cluster.setApps_submit(object.get("appsSubmitted").getAsInt());
 		cluster.setApps_complet(object.get("appsCompleted").getAsInt());
 		cluster.setApps_pending(object.get("appsPending").getAsInt());
@@ -38,10 +37,10 @@ public class ClusterData {
 		cluster.setNodes_active(object.get("activeNodes").getAsInt());
 		cluster.setNodes_lost(object.get("lostNodes").getAsInt());
 		cluster.setNodes_unhealthy(object.get("unhealthyNodes").getAsInt());
-		cluster.setNodes_decommissioning(-1);//取不到暂置为-1
+		cluster.setNodes_decommissioning(-1);// 取不到暂置为-1
 		cluster.setNodes_decommissioned(object.get("appsSubmitted").getAsInt());
 		cluster.setNodes_rebooted(object.get("rebootedNodes").getAsInt());
-		cluster.setNodes_shutdown(-1);//取不到暂置为-1
+		cluster.setNodes_shutdown(-1);// 取不到暂置为-1
 		cluster.setCreated_at(new Date());
 		return cluster;
 	}

@@ -2,8 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.mapper.PpDataMapper">
 
-  <select id="selectPp" parameterType="Date" resultType="PpPO">
-	SELECT
+	<select id="selectPp" parameterType="Date" resultType="PpPO">
+		SELECT
 		a.SATELLITEID,
 		a.ORBITID,
 		a.SCENEID,
@@ -11,19 +11,20 @@
 		b.ACTIVITYDEFNAME,
 		b.BEGINTIME,
 		b.FINISHTIME,
-		b.`STATUS` 
-	FROM
-		pp_t_scenetask a JOIN pp_t_sceneactivity b 
-		ON a.COMMTASKID = b.TASKID 
-		AND a.L1WFID = b.PROCESSINSTID 
-		 AND b.FINISHTIME > #{lastFinishTime}
+		b.`STATUS`
+		FROM
+		pp_t_scenetask a JOIN pp_t_sceneactivity b
+		ON a.COMMTASKID = b.TASKID
+		AND a.L1WFID = b.PROCESSINSTID
+		<!--  AND a.SATELLITEID = 'ZY302'-->
+		AND b.FINISHTIME > #{lastFinishTime}
 		<!-- '2020-06-29 14:45:22' -->
-		   
-		
-  </select>
- 
-	<select id="selectRunningPp"  parameterType="Date" resultType="PpPO">
-	SELECT
+
+
+	</select>
+
+	<select id="selectRunningPp" parameterType="Date" resultType="PpPO">
+		SELECT
 		a.SATELLITEID,
 		a.ORBITID,
 		a.SCENEID,
@@ -31,14 +32,23 @@
 		b.ACTIVITYDEFNAME,
 		b.BEGINTIME,
 		b.FINISHTIME,
-		b.`STATUS` 
-	FROM
-		pp_t_scenetask a JOIN pp_t_sceneactivity b 
-		ON a.COMMTASKID = b.TASKID 
-		AND a.L1WFID = b.PROCESSINSTID 
+		b.`STATUS`
+		FROM
+		pp_t_scenetask a JOIN pp_t_sceneactivity b
+		ON a.COMMTASKID = b.TASKID
+		AND a.L1WFID = b.PROCESSINSTID
 		AND b.STATUS=2
-		 AND b.BEGINTIME > #{lastRunningStartTime} 
-		<!--  #{lastRunningStartTime}  -->
-		
-  </select>
+		AND b.BEGINTIME >
+		#{lastRunningStartTime}
+		<!-- #{lastRunningStartTime} -->
+
+	</select>
+	<!-- //获得当前访问的数据库对应卫星名 String selectPpStatellited(); -->
+	<select id="selectPpStatellited" resultType="String">
+		select DISTINCT
+		SATELLITEID from pp_t_scenetask
+	</select>
+	<select id="selectName" resultType="String">
+		select name from name
+	</select>
 </mapper>
