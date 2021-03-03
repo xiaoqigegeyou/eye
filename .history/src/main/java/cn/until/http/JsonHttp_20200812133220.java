@@ -19,6 +19,7 @@ import com.google.gson.JsonParser;
  *             <p>
  *             HTTP请求获取数据
  *             </p>
+ * @author 崔安兵 2019年9月27日
  *
  */
 @Component

@@ -8,6 +8,8 @@ import java.util.List;
  * <p>
  * 划分List为几个不同大小的List【适用场景：mybatis分批次In查询，放置In拼接sql过长】
  * </p>
+ * 
+ * @author 崔安兵 2019年9月30日
  *
  */
 public class ListSplit {

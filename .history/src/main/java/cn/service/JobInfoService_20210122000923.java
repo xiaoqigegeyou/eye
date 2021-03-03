@@ -16,6 +16,7 @@ import cn.until.ListSplit;
  * 对于Job信息的数据库操作
  * </p>
  * 
+ * @author 崔安兵 2019年9月27日
  *
  */
 @Component

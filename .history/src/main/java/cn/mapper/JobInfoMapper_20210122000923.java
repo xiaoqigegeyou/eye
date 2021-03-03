@@ -13,6 +13,7 @@ import cn.pojo.PpMasterPO;
  * Application的信息
  * </p>
  * 
+ * @author 崔安兵 2019年9月30日
  *
  */
 public interface JobInfoMapper {
