@@ -16,7 +16,7 @@ public class DataTransfer {
 
 	@Scheduled(cron = "0 0 1 * * ?")
 	public void run() {
-
+//		数据转移
 		jobInfoService.transfer();
 
 		mapInfoService.transfer();

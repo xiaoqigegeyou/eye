@@ -11,7 +11,6 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-import cn.application.Getappliction;
 import cn.until.http.JsonHttp;
 
 @Component
@@ -35,7 +34,7 @@ public class Getcluster {
 			object = (JsonObject) object.get("clusterMetrics");
 			// array.add(object);
 			// array = object.getAsJsonArray(); // 获得原始数据的JSON数组
-			// System.out.println(array.size());
+	
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

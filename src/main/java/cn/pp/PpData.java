@@ -27,14 +27,7 @@ public class PpData {
 		List<DataSourcePO> dataSource = ppMasterService.getDataSource();
 		
 		String satellite = null;
-//				ppService.selectPpStatellited();// 获得当前数据库对应的卫星名
-//		Date lastDate = ppMasterService.getLastFinishTime(satellite);
-//		Date lastRunningDate = ppMasterService.getLastRunningStartTime(satellite);
-//		if (lastDate == null)
-//			lastDate = DateFormat.toDate("1594024350000");// 2020-07-06 16:32:30
-//		if (lastRunningDate == null)
-//			lastRunningDate = DateFormat.toDate("1594024350000");// 2020-07-06 16:32:30
-		// System.out.println(lastDate);
+
 		List<PpMasterPO> master = new ArrayList<PpMasterPO>();
 		List<PpMasterPO> masterRunning = new ArrayList<PpMasterPO>();
 		
@@ -52,7 +45,7 @@ public class PpData {
 			String lastDate =null;
 			String lastRunningDate =null;
 			
-			satellite = dataSourcePO.getStatellite_name();
+			satellite = dataSourcePO.getStatellite_name();//获得数据库名称
 			
 			
 			Date last = ppMasterService.getLastFinishTime(satellite);
@@ -75,12 +68,7 @@ public class PpData {
 			ppRunningLists.addAll(ppRunningList);
 			
 		}
-//		Set<PpPO> set = new HashSet<PpPO>(ppLists);
-//		if(set.size() < ppLists.size()){
-//		   System.out.println("yes");
-//		}
-//		List<PpPO> ppLists = ppService.getPp(lastDate);
-//		List<PpPO> ppRunningLists = ppService.getRunningPp(lastRunningDate);
+
 		int o=0;
 		for (PpPO ppPO : ppLists) {
 			// System.out.println(ppPO.toString());

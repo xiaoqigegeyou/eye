@@ -41,25 +41,11 @@ public class ApplicationData {
 			String jobAllName = subObject.get("name").getAsString();
 
 			String state = subObject.get("state").getAsString();
-			// String trackingUrl=subObject.get("trackingUrl").getAsString();
-			// System.out.println(jobAllName+id+state+user+finalStatus+startedTime+finishedTime+elapsedTime+trackingUrl);
+			
 			if (state.equals("ACCEPTED")) {// 正在队列内的任务，还没有运行
 				continue;
 			} else if (state.equals("RUNNING")) {// 正在运行的任务
-				// System.out.println("run");
-//				if (jobAllName.indexOf("Un_Tar") != -1) {// 正在解压的任务
-//					//ZY302_Un_Tar_+Receive_Data+4181+2020-07-01+ZY302_TMS_E114.4_N35.8_20200701_L1A0000696162.tar.gz
-//					String[] nameArray = jobAllName.split("[+]");
-//					if (nameArray.length < 5) {// 任务名称不规范,直接舍弃
-//						continue;
-//					}
-//					/** 通用部分代码 **/
-//					app = jsonToJob(subObject);
-//
-//					/** 解压任务用用 */
-//					job_UnTar(nameArray, app);
-//				
-//				} else {// 不是正在解压的任务
+				
 				String[] nameArray = jobAllName.split("_");
 				// GF2_4439_3333865
 				if (nameArray.length !=8) {
@@ -67,18 +53,11 @@ public class ApplicationData {
 				}
 				/** 通用部分代码 **/
 				app = jsonToJob(subObject);
-				// 非解压任务
+				// 非解压任务（现在是对所有任务经行处理，不管是否解压）
 				job_NoUnTar(nameArray, app);
-//					//添加景号与圈号
-//					PpMasterPO po = get_orbit_scene(app.getSatellite_name(), app.getProduct_id());
-//					if(po!=null) {
-//						app.setOrbit_no(po.getOrbit_no());
-//						app.setScene_no(po.getScene_no());
-//					}
-//					runingJob.add(app);
-//			}
-				// 添加景号与圈号
+				//添加圈号景号
 				PpMasterPO po = get_orbit_scene(app.getSatellite_name(), app.getProduct_id());
+				
 				if (po != null) {
 					app.setOrbit_no(po.getOrbit_no());
 					app.setScene_no(po.getScene_no());
@@ -86,21 +65,10 @@ public class ApplicationData {
 				runingJob.add(app);
 			} else {// 已经完成的(成功和失败的)
 				tmpTime = Long.parseLong(subObject.get("finishedTime").getAsString());
-				if (tmpTime <= lastTime) {
+				if (tmpTime <= lastTime) {//筛选符合条件的数据
 					continue;
 				}
-//				if (jobAllName.indexOf("Un_Tar") != -1) {// 解压的任务
-//					String[] nameArray = jobAllName.split("[+]");
-//					if (nameArray.length < 5) {// 任务名称不规范,直接舍弃
-//						continue;
-//					}
-//					/** 通用部分代码 **/
-//					app = jsonToJob(subObject);
-//					/** 解压任务用用 */
-//					job_UnTar(nameArray, app);
-//
-//				} 
-				else {// 非解压任务
+				else {
 					String[] nameArray = jobAllName.split("_");
 					if (nameArray.length !=8) {
 						// System.out.println("任务命名不对");
@@ -167,26 +135,4 @@ public class ApplicationData {
 
 	}
 
-	// 解压的任务处理
-//	private void job_UnTar(String[] nameArray, ApplicationPO app) {
-//		// ZY302_Un_Tar_+Receive_Data+4181+2020-07-01+ZY302_TMS_E114.4_N35.8_20200701_L1A0000696162.tar.gz
-//		int setStepID = 0;
-//		// sateliteName[0] ==== GF1_Un_Tar_
-//		String sateName = nameArray[0].substring(0, nameArray[0].indexOf("_"));// 得到卫星名称
-//		int targzNumber = nameArray[nameArray.length - 1].lastIndexOf(".tar.gz");
-//		// sateliteName[sateliteName.length - 1].substring(targzNumber - 7,
-//		// targzNumber);
-//		// 获得产品号 6505674
-//		String jing = nameArray[nameArray.length - 1].substring(targzNumber - 7, targzNumber);
-//		// 拼接出来产品唯一名 GF1D_4436_6505674
-//		// String jobName = sateName + "_" + nameArray[2] + "_" + jing;
-//		// 查询数据库的到处理步骤相对相应的id
-//		setStepID = jobstepInfoService.getBySuffixName("Un_Tar").getId();
-//		// app.setJobname(jobName);
-//		app.setProduct_id(jing);
-//		app.setSatellite_name(sateName);
-//		app.setProvince_id(nameArray[2]);// 得到省编号
-//		app.setStep_id(setStepID);
-//		// app.setResultpath("");// 默认预览图像
-//	}
 }

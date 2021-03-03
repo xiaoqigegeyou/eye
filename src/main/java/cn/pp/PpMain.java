@@ -18,26 +18,7 @@ public class PpMain {
 	@Scheduled(cron = "55 0/20 * * * ? ")
 	public void run() {
 		PpData.ppAnalysis();
-//			Map<String, String> keyValueMap = new HashMap<String, String>();
-////			keyValueMap.put("jdbc.driver", "com.mysql.jdbc.Driver");
-////			keyValueMap.put("jdbc.url", "jdbc:mysql://localhost:3306/hadoop_test?characterEncoding=utf-8&serverTimezone=GMT%2b8");
-////			keyValueMap.put("jdbc.username", "root");
-////			keyValueMap.put("jdbc.password", "123456");
-//			
-//			keyValueMap.put("pp.jdbc.driver", "com.mysql.jdbc.Driver");
-//			keyValueMap.put("pp.jdbc.url", "jdbc:mysql://localhost:3306/oms_tt?characterEncoding=utf-8&serverTimezone=GMT%2b8");
-//			keyValueMap.put("pp.jdbc.username", "root");
-//			keyValueMap.put("pp.jdbc.password", "123456");
-//			PropertiesUtil.updateProperties("jdbc2.properties", keyValueMap);
-//			System.out.println(ppService.selectName());
-//			
-//			keyValueMap.put("pp.jdbc.driver", "com.mysql.jdbc.Driver");
-//			keyValueMap.put("pp.jdbc.url", "jdbc:mysql://localhost:3306/oms_z302?characterEncoding=utf-8&serverTimezone=GMT%2b8");
-//			keyValueMap.put("pp.jdbc.username", "root");
-//			keyValueMap.put("pp.jdbc.password", "123456");
-//			PropertiesUtil.updateProperties("jdbc2.properties", keyValueMap);
-//				System.out.println(ppService.selectName());
-		
+
 
 	}
 }
